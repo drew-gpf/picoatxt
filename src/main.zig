@@ -18,11 +18,11 @@ const c = @import("sdk.zig");
 const atxt = @import("atxt.zig");
 const scancodes = @import("scancodes.zig");
 
-pub const std_options = struct {
-    pub const logFn = log;
+pub const std_options: std.Options = .{
+    .logFn = log,
 
     // Uncomment or change to enable logs for any build mode
-    // pub const log_level: std.log.Level = .debug;
+    // .log_level = .debug;
 };
 
 /// stdlib log handler; no logging is done if stdio is disabled.

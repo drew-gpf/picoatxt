@@ -64,6 +64,7 @@ pub fn main() !u8 {
             child.stderr_behavior = .Close;
             child.stdin_behavior = .Close;
             child.stdout_behavior = .Pipe;
+            child.expand_arg0 = .expand;
 
             try child.spawn();
             errdefer _ = child.kill() catch {};
@@ -128,6 +129,7 @@ pub fn main() !u8 {
 
         var child = std.ChildProcess.init(build_args.items, allocator);
         child.cwd = project_root;
+        child.expand_arg0 = .expand;
 
         switch (try child.spawnAndWait()) {
             .Exited => |val| {
@@ -142,6 +144,7 @@ pub fn main() !u8 {
     // Compile object files unconditionally. This is made extremely easy by the fact that
     // the compiler is given in the command line.
     var child = std.ChildProcess.init(args[1..], allocator);
+    child.expand_arg0 = .expand;
 
     return switch (try child.spawnAndWait()) {
         .Exited => |val| val,
